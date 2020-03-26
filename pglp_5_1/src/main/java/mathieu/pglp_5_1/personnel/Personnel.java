@@ -18,25 +18,69 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 	 */
 	private static final long serialVersionUID = 8028856539374241727L;
 	/**
+	 * identifant personnel.
+	 */
+	private final int id;
+	/**
+	 * obtenir l'id du personnel
+	 */
+	public int getId() {
+	    return id;
+	}
+    /**
 	 * nom de la personne.
 	 */
-	private final String  nom;
+	private final String nom;
+	/**
+     * récupérer le nom.
+     */
+    public String getNom() {
+        return nom;
+    }
 	/**
 	 * prenom de la personne.
 	 */
 	private final String prenom;
 	/**
+     * récupérer le prenom.
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+	/**
 	 * date de naissance de la personne.
 	 */
 	private final java.time.LocalDate dateNaissance;
+	/**
+     * récupérer la date de naissance.
+     */
+    public java.time.LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
 	/**
 	 * liste des numéros de téléphone de la personne.
 	 */
 	private final ArrayList<String> numeroTelephone;
 	/**
+     * donne la liste des numéros de téléphone du personnel.
+     * @return une copie de la liste des nuémros de téléphone
+     */
+    @SuppressWarnings("unchecked")
+    public ArrayList<String> getNumeroTelephone(){
+        return (ArrayList<String>) numeroTelephone.clone();
+    }
+	/**
 	 * Pattern builder pour la classe personnel.
 	 */
 	public static class Builder {
+	    /**
+	     * définir un id différent au personnel.
+	     */
+	    private static int idNext = 1;
+	    /**
+	     * identifant personnel.
+	     */
+	    private final int id;
 		/**
 		 * nom de la personne.
 		 */
@@ -54,13 +98,13 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 		 */
 		private final ArrayList<String> numeroTelephone;
 		/**
-		 * constructeur pour la classe Builder.
-		 * @param nomP nom de la personne
-		 * @param prenomP prenom de la personne
-		 * @param dateNaissanceP date de naissance de la personne
-		 * @param numeroTelephoneP les numéros de téléphone
-		 * de la personne
-		 */
+         * constructeur pour la classe Builder.
+         * @param nomP nom de la personne
+         * @param prenomP prenom de la personne
+         * @param dateNaissanceP date de naissance de la personne
+         * @param numeroTelephoneP les numéros de téléphone
+         * de la personne
+         */
 		public Builder(final String nomP, final String prenomP,
 			final java.time.LocalDate dateNaissanceP,
 			final ArrayList<String> numeroTelephoneP) {
@@ -68,6 +112,7 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 			this.prenom = prenomP;
 			this.dateNaissance = dateNaissanceP;
 			this.numeroTelephone = numeroTelephoneP;
+			this.id = idNext++;
 		}
 		/**
 		 * construit une variable de type Personnel avec le builder.
@@ -86,6 +131,7 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 		prenom = builder.prenom;
 		dateNaissance = builder.dateNaissance;
 		numeroTelephone = builder.numeroTelephone;
+		id = builder.id;
 	}
 	/**
 	 * implémentation de la méthode print() de l'interface.

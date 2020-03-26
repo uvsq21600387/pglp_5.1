@@ -1,12 +1,13 @@
 package mathieu.pglp_5_1.dao;
 
-import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Map;
 
-public abstract class Dao<T> {
-    protected Connection connect;
+public interface Dao<T> {
     
-    public abstract T create(T object);
-    public abstract T find(String id);
-    public abstract T update (T object);
-    public abstract void delete(T object);
+    public void add(T object);
+    public T get(int id);
+    public ArrayList<T> getAll();
+    public T update(T object, Map<String,Object> params);
+    public void remove(T object);
 }
