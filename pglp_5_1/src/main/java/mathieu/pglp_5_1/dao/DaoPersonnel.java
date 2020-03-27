@@ -17,7 +17,7 @@ import mathieu.pglp_5_1.personnel.Personnel;
  */
 public class DaoPersonnel implements Dao<Personnel>, Serializable {
     /**
-     * serial number pour la serialization
+     * serial number pour la serialization.
      */
     private static final long serialVersionUID = 9721705196084890L;
     /**
@@ -59,39 +59,43 @@ public class DaoPersonnel implements Dao<Personnel>, Serializable {
     }
     @SuppressWarnings("unchecked")
     /**
-     * modifier un personnel.
-     * @return un nouveau personnel avec les nouveaux parametres
+     * modifier un personnel (la classe est immuable, son id est donc modifié).
+     * la clé doit être identique à l'attribut.
+     * la valeur doit être de même type que l'attribut.
+     * l'identifiant ne peut être ajouté à la liste des paramètres pour le modifier.
      */
-    public Personnel update(final Personnel object, final Map<String, Object> params) {
-        String nom = "";
-        if (params.containsKey("nom")) {
-            nom = (String) params.get("nom");
-        } else {
-            nom = object.getNom();
+    public void update(final Personnel object, final Map<String, Object> params) {
+        if (list.remove(object)) {
+            String nom = "";
+            if (params.containsKey("nom")) {
+                nom = (String) params.get("nom");
+            } else {
+                nom = object.getNom();
+            }
+            String prenom = "";
+            if (params.containsKey("prenom")) {
+                prenom = (String) params.get("prenom");
+            } else {
+                prenom = object.getPrenom();
+            }
+            LocalDate dateNaissance;
+            if (params.containsKey("dateNaissance")) {
+                dateNaissance = (LocalDate) params.get("dateNaissance");
+            } else {
+                dateNaissance = object.getDateNaissance();
+            }
+            ArrayList<String> numeroTelephone;
+            if (params.containsKey("numeroTelephone")) {
+                ArrayList<String> tmp;
+                tmp = (ArrayList<String>) params.get("numeroTelephone");
+                numeroTelephone = (ArrayList<String>) tmp.clone();
+            } else {
+                numeroTelephone = object.getNumeroTelephone();
+            }
+            Personnel p = new Personnel.Builder(
+                nom, prenom, dateNaissance, numeroTelephone).build();
+            list.add(p);
         }
-        String prenom = "";
-        if (params.containsKey("prenom")) {
-            prenom = (String) params.get("prenom");
-        } else {
-            prenom = object.getPrenom();
-        }
-        LocalDate dateNaissance;
-        if (params.containsKey("dateNaissance")) {
-            dateNaissance = (LocalDate) params.get("dateNaissance");
-        } else {
-            dateNaissance = object.getDateNaissance();
-        }
-        ArrayList<String> numeroTelephone;
-        if (params.containsKey("numeroTelephone")) {
-            ArrayList<String> tmp;
-            tmp = (ArrayList<String>) params.get("numeroTelephone");
-            numeroTelephone = (ArrayList<String>) tmp.clone();
-        } else {
-            numeroTelephone = object.getNumeroTelephone();
-        }
-        Personnel p = new Personnel.Builder(
-            nom, prenom, dateNaissance, numeroTelephone).build();
-        return p;
     }
     /**
      * supprime un personnel du DAO.

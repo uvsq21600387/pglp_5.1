@@ -8,6 +8,6 @@ public interface Dao<T> {
     public void add(T object);
     public T get(int id);
     public ArrayList<T> getAll();
-    public T update(T object, Map<String,Object> params);
+    public void update(T object, Map<String,Object> params);
     public void remove(T object);
 }

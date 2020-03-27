@@ -18,7 +18,7 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 	 */
 	private static final long serialVersionUID = 8028856539374241727L;
 	/**
-	 * identifant personnel.
+	 * identifiant personnel.
 	 */
 	private final int id;
 	/**
@@ -78,7 +78,7 @@ public final class Personnel implements InterfacePersonnels, Serializable {
 	     */
 	    private static int idNext = 1;
 	    /**
-	     * identifant personnel.
+	     * identifiant personnel.
 	     */
 	    private final int id;
 		/**

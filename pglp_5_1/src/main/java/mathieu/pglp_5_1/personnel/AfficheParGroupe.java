@@ -21,8 +21,28 @@ Serializable {
 	/**
 	 * liste rempli avec le parcours en largeur.
 	 */
-	private ArrayDeque<InterfacePersonnels> c
-	= new ArrayDeque<InterfacePersonnels>();
+	private ArrayDeque<InterfacePersonnels> file;
+	/**
+	 * identifiant
+	 */
+	private final int id;
+	/**
+	 * pour attribuer un identifiant différent à chaque construction.
+	 */
+	private static int idNext = 1;
+	/**
+	 * constructeur de la classe
+	 */
+	public AfficheParGroupe() {
+	    file = new ArrayDeque<InterfacePersonnels>();
+	    id = idNext++;
+	}
+	/**
+	 * récupérer l'identifiant.
+	 */
+	public int getId() {
+	    return id;
+	}
 	/**
 	 * affiche sous forme de parcours en largeur.
 	 * @param ip InterfacePersonnel à afficher
@@ -31,20 +51,20 @@ Serializable {
 		if (ip.getClass() == CompositePersonnels.class) {
 			InterfacePersonnels y, z;
 			CompositePersonnels tmp;
-			c = new ArrayDeque<InterfacePersonnels>();
+			file = new ArrayDeque<InterfacePersonnels>();
 			ArrayDeque<InterfacePersonnels> d =
 				new ArrayDeque<InterfacePersonnels>();
 			d.add(ip);
 			while (!d.isEmpty()) {
 				y = d.pollFirst();
-				c.add(y);
+				file.add(y);
 				if (y.getClass() == CompositePersonnels.class) {
 					tmp = (CompositePersonnels) y;
 					Iterator<InterfacePersonnels> ite =
 						tmp.iterator();
 					while (ite.hasNext()) {
 						z = ite.next();
-						if (!d.contains(z) && !c.contains(z)) {
+						if (!d.contains(z) && !file.contains(z)) {
 							d.add(z);
 						}
 					}
@@ -57,7 +77,7 @@ Serializable {
 	 * @return itérateur sur la liste rempli par le parcours
 	 */
 	public Iterator<InterfacePersonnels> iterator() {
-		return c.iterator();
+		return file.iterator();
 	}
 	/**
 	 * affiche le parcours en largeur.
@@ -73,7 +93,7 @@ Serializable {
 	    String s = "";
 	    CompositePersonnels tmp;
         //affichage du parcours
-        for (InterfacePersonnels c2 : c) {
+        for (InterfacePersonnels c2 : file) {
             if (c2.getClass() == CompositePersonnels.class) {
                 tmp = (CompositePersonnels) c2;
                 s += tmp.getId() + "\n";
@@ -82,6 +102,20 @@ Serializable {
             }
         }
 	    return s;
+	}
+	/**
+	 * ajoute un interfacePersonnel à la fin de la liste.
+	 */
+	public void add(InterfacePersonnels ip) {
+	    file.add(ip);
+	}
+	/**
+	 * supprime tous les éléments de la liste.
+	 */
+	public void reset() {
+	    while (!file.isEmpty()) {
+	        file.removeFirst();
+	    }
 	}
 	/**
      * serialize vers le fichier voulu.
