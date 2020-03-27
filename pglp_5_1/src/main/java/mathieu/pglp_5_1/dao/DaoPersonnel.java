@@ -15,7 +15,8 @@ import mathieu.pglp_5_1.personnel.Personnel;
 /**
  * DAO pour la classe Personnel.
  */
-public class DaoPersonnel implements Dao<Personnel>, Serializable {
+public class DaoPersonnel
+implements Dao<Personnel>, Serializable {
     /**
      * serial number pour la serialization.
      */
@@ -32,39 +33,46 @@ public class DaoPersonnel implements Dao<Personnel>, Serializable {
     }
     /**
      * ajoute un Personnel dans la liste du DAO.
+     * @param object l'élément à ajouter
      */
     public void add(final Personnel object) {
         list.add(object);
     }
     /**
      * obtenir un personnel du DAO.
+     * @param id identifiant de l'élément à obtenir
      * @return null si aucun personnel existe avec l'id spécifié
      * et le personnel sinon
      */
     public Personnel get(final int id) {
-        for(Personnel p : list) {
-            if(p.getId() == id) {
+        for (Personnel p : list) {
+            if (p.getId() == id) {
                 return p;
             }
         }
         return null;
     }
-    @SuppressWarnings("unchecked")
     /**
      * obtenir une liste de tout les personnels du DAO.
      * @return une liste des personnels du DAO
      */
+    @SuppressWarnings("unchecked")
     public ArrayList<Personnel> getAll() {
         return (ArrayList<Personnel>) list.clone();
     }
-    @SuppressWarnings("unchecked")
     /**
-     * modifier un personnel (la classe est immuable, son id est donc modifié).
+     * modifier un personnel
+     * (la classe est immuable, son id est donc modifié).
      * la clé doit être identique à l'attribut.
      * la valeur doit être de même type que l'attribut.
-     * l'identifiant ne peut être ajouté à la liste des paramètres pour le modifier.
+     * l'identifiant ne peut être ajouté
+     * à la liste des paramètres pour le modifier.
+     * @param object l'élément à modifier
+     * @param params les paramètres à modifier
      */
-    public void update(final Personnel object, final Map<String, Object> params) {
+    @SuppressWarnings("unchecked")
+    public void update(final Personnel object,
+            final Map<String, Object> params) {
         if (list.remove(object)) {
             String nom = "";
             if (params.containsKey("nom")) {
@@ -99,6 +107,7 @@ public class DaoPersonnel implements Dao<Personnel>, Serializable {
     }
     /**
      * supprime un personnel du DAO.
+     * @param object élément à supprimer
      */
     public void remove(final Personnel object) {
         list.remove(object);
@@ -116,7 +125,9 @@ public class DaoPersonnel implements Dao<Personnel>, Serializable {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            System.err.println("La serialization a échoué vers le fichier \"" + path + "\"");
+            System.err.println(
+            "La serialization a échoué vers le fichier \""
+            + path + "\"");
         }
         try {
             if (writer != null) {
@@ -140,7 +151,9 @@ public class DaoPersonnel implements Dao<Personnel>, Serializable {
             reader = new ObjectInputStream(file);
             dp = (DaoPersonnel) reader.readObject();
         } catch (IOException e) {
-            System.err.println("La deserialization a échoué depuis le fichier \"" + path + "\"");
+            System.err.println(
+            "La deserialization a échoué depuis le fichier \""
+            + path + "\"");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

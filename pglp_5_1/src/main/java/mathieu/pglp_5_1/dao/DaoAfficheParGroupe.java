@@ -12,7 +12,11 @@ import java.util.Map;
 import mathieu.pglp_5_1.personnel.AfficheParGroupe;
 import mathieu.pglp_5_1.personnel.InterfacePersonnels;
 
-public class DaoAfficheParGroupe implements Dao<AfficheParGroupe>, Serializable {
+/**
+ * Dao pour la classe AfficheParGroupe.
+ */
+public class DaoAfficheParGroupe
+implements Dao<AfficheParGroupe>, Serializable {
     /**
      * serial number pour la serialization.
      */
@@ -29,44 +33,51 @@ public class DaoAfficheParGroupe implements Dao<AfficheParGroupe>, Serializable 
     }
     /**
      * ajoute un AfficheParGroupe dans la liste du DAO.
+     * @param object l'élément à ajouter
      */
     public void add(final AfficheParGroupe object) {
         list.add(object);
     }
     /**
      * obtenir un AfficheParGroupe du DAO.
+     * @param id identifiant de l'élément à obtenir
      * @return null si aucun AfficheParGroupe existe avec l'id spécifié
      * et le AfficheParGroupe sinon
      */
     public AfficheParGroupe get(final int id) {
-        for(AfficheParGroupe apg : list) {
+        for (AfficheParGroupe apg : list) {
             if (apg.getId() == id) {
                 return apg;
             }
         }
         return null;
     }
-    @SuppressWarnings("unchecked")
     /**
      * obtenir une liste de tout les AfficheParGroupe du DAO.
      * @return une liste des AfficheParGroupe du DAO
      */
+    @SuppressWarnings("unchecked")
     public ArrayList<AfficheParGroupe> getAll() {
         return (ArrayList<AfficheParGroupe>) list.clone();
     }
-    @SuppressWarnings("unchecked")
     /**
      * modifier un AfficheParGroupe.
      * la clé doit être identique à l'attribut.
      * la valeur doit être de même type que l'attribut.
-     * l'identifiant ne peut être ajouté à la liste des paramètres pour le modifier.
+     * l'identifiant ne peut être ajouté
+     * à la liste des paramètres pour le modifier.
+     * @param object l'élément à modifier
+     * @param params les paramètres à modifier
      */
-    public void update(final AfficheParGroupe object, final Map<String, Object> params) {
+    @SuppressWarnings("unchecked")
+    public void update(final AfficheParGroupe object,
+            final Map<String, Object> params) {
         if (list.contains(object)) {
-            ArrayList<InterfacePersonnels> remplace = (ArrayList<InterfacePersonnels>) params.get("file");
+            ArrayList<InterfacePersonnels> remplace =
+            (ArrayList<InterfacePersonnels>) params.get("file");
             if (params.containsKey("file")) {
                 object.reset();
-                for(InterfacePersonnels ip : remplace) {
+                for (InterfacePersonnels ip : remplace) {
                     object.add(ip);
                 }
             }
@@ -74,6 +85,7 @@ public class DaoAfficheParGroupe implements Dao<AfficheParGroupe>, Serializable 
     }
     /**
      * supprime un AfficheParGroupe du DAO.
+     * @param object élément à supprimer
      */
     public void remove(final AfficheParGroupe object) {
         list.remove(object);
@@ -91,7 +103,9 @@ public class DaoAfficheParGroupe implements Dao<AfficheParGroupe>, Serializable 
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            System.err.println("La serialization a échoué vers le fichier \"" + path + "\"");
+            System.err.println(
+            "La serialization a échoué vers le fichier \""
+            + path + "\"");
         }
         try {
             if (writer != null) {
@@ -115,7 +129,9 @@ public class DaoAfficheParGroupe implements Dao<AfficheParGroupe>, Serializable 
             reader = new ObjectInputStream(file);
             dapg = (DaoAfficheParGroupe) reader.readObject();
         } catch (IOException e) {
-            System.err.println("La deserialization a échoué depuis le fichier \"" + path + "\"");
+            System.err.println(
+            "La deserialization a échoué depuis le fichier \""
+            + path + "\"");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
