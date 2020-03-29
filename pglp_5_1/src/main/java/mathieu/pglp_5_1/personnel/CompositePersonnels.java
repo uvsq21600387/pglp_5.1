@@ -73,9 +73,7 @@ Serializable {
      * @return lui-même
      */
     public CompositePersonnels remove(final InterfacePersonnels ip) {
-        if (personnels.contains(ip)) {
-            personnels.remove(ip);
-        }
+        System.out.println(personnels.remove(ip));
         return this;
     }
     /**
@@ -145,5 +143,11 @@ Serializable {
             e2.printStackTrace();
         }
         return cp;
+    }
+    /**
+     * vide la liste.
+     */
+    public void reset() {
+        personnels.clear();
     }
 }

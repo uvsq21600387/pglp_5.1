@@ -1,4 +1,4 @@
-package mathieu.pglp_5_1;
+package mathieu.pglp_5_1.personnel;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

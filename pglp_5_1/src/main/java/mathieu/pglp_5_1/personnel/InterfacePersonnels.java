@@ -8,4 +8,8 @@ public interface InterfacePersonnels {
      * pour s'afficher.
      */
     void print();
+    /**
+     * représentation en chaine de caractère.
+     */
+    String toString();
 }

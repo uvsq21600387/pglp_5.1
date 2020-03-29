@@ -1,7 +1,8 @@
-package mathieu.pglp_5_1;
+package mathieu.pglp_5_1.personnel;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.Iterator;
 
 import org.junit.Test;
@@ -39,9 +40,29 @@ public class CompositePersonnelsTest {
 	public void testSuppression() {
 		CompositePersonnels cp = new CompositePersonnels();
 		CompositePersonnels cp2 = new CompositePersonnels();
+		InterfacePersonnels it = cp2;
 		cp.add(cp2);
-		cp.remove(cp2);
+		cp.remove(it);
 		Iterator<InterfacePersonnels> ip = cp.iterator();
 		assertFalse(ip.hasNext());
 	}
+	
+	@Test
+	public void testSerialization() {
+	    CompositePersonnels cp = new CompositePersonnels();
+        CompositePersonnels cp2 = new CompositePersonnels();
+        cp.add(cp2);
+        
+        cp.serialize("cp.ser");
+        CompositePersonnels cp3 = CompositePersonnels.deserialize("cp.ser");
+        File f = new File("cp.ser");
+        f.delete();
+        assertTrue(cp.toString().equals(cp3.toString()));
+	}
+
+    @Test
+    public void testEchecDeserialize() {
+        CompositePersonnels c = CompositePersonnels.deserialize("ccc");
+        assertNull(c);
+    }
 }

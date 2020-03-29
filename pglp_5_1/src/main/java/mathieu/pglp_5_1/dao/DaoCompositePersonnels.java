@@ -74,13 +74,11 @@ implements Dao<CompositePersonnels>, Serializable {
     public void update(final CompositePersonnels object,
             final Map<String, Object> params) {
         if (list.contains(object)) {
-            ArrayList<InterfacePersonnels> remplace =
-            (ArrayList<InterfacePersonnels>) params.get("personnels");
             if (params.containsKey("personnels")) {
-                Iterator<InterfacePersonnels> obj = object.iterator();
-                while (obj.hasNext()) {
-                    object.remove(obj.next());
-                }
+                ArrayList<InterfacePersonnels> remplace =
+                (ArrayList<InterfacePersonnels>)
+                params.get("personnels");
+                object.reset();
                 for (InterfacePersonnels ip : remplace) {
                     object.add(ip);
                 }

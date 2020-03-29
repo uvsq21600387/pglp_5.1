@@ -1,7 +1,8 @@
-package mathieu.pglp_5_1;
+package mathieu.pglp_5_1.personnel;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,5 +55,28 @@ public class AffichageParGroupeTest {
         list2.add(p);
         assertTrue(list.toString().equalsIgnoreCase(list2.toString()));
 	}
-
+	
+	@Test
+	public void testSerialization() {
+	    CompositePersonnels c7 = new CompositePersonnels();
+        ArrayList<String> numero = new ArrayList<String>();
+        numero.add("06.18.12.15.95");
+        numero.add("01.25.46.85.16");
+        Personnel p = new Personnel.Builder(
+            "man", "Iron", LocalDate.of(1955, 05, 02), numero).build();
+        c7.add(p);
+        AfficheParGroupe apg = new AfficheParGroupe();
+        apg.parcoursLargeur(c7);
+        apg.serialize("c7.ser");
+        AfficheParGroupe apg2 = AfficheParGroupe.deserialize("c7.ser");
+        File f = new File("c7.ser");
+        f.delete();
+        assertTrue(apg.toString().equals(apg2.toString()));
+	}
+	
+	@Test
+    public void testEchecDeserialize() {
+	    AfficheParGroupe c = AfficheParGroupe.deserialize("ccc");
+        assertNull(c);
+    }
 }
