@@ -10,6 +10,7 @@ public interface InterfacePersonnels {
     void print();
     /**
      * représentation en chaine de caractère.
+     * @return toString d'un InterfacePersonnels
      */
     String toString();
 }
